@@ -1,0 +1,6 @@
+agent,mean_seed_reward,std_seed_reward,lowest_seed_reward,highest_seed_reward,mean_seed_mastery_gain,std_seed_mastery_gain
+A2C,8.6187,3.491,4.0654,16.0021,0.1046,0.0116
+DQN,8.3224,2.729,3.9647,12.2993,0.1079,0.01
+PPO,10.002,2.9845,4.7621,14.4157,0.1046,0.0105
+REINFORCE,8.1831,2.8295,4.2908,12.2993,0.1083,0.0096
+Random,8.7851,3.0047,5.5,14.4158,0.1019,0.0108

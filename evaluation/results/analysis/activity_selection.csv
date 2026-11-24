@@ -1,0 +1,20 @@
+agent,activity,count
+A2C,Revision of weakest skill,427
+A2C,Local-language support scaffold,373
+DQN,Local-language support scaffold,745
+DQN,Revision of weakest skill,23
+DQN,Listening practice,19
+DQN,Word matching,13
+PPO,Local-language support scaffold,423
+PPO,Sentence building,292
+PPO,Vocabulary introduction,71
+PPO,Reading comprehension,13
+PPO,Revision of weakest skill,1
+REINFORCE,Local-language support scaffold,800
+Random,Local-language support scaffold,126
+Random,Word matching,126
+Random,Listening practice,113
+Random,Revision of weakest skill,111
+Random,Vocabulary introduction,109
+Random,Reading comprehension,108
+Random,Sentence building,107

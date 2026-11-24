@@ -1,0 +1,6 @@
+agent,vocabulary_gain,listening_gain,comprehension_gain,sentence_building_gain
+A2C,0.0388,0.1168,0.0945,0.168
+DQN,0.0457,0.1225,0.0936,0.1697
+PPO,0.0498,0.0868,0.0758,0.2061
+REINFORCE,0.042,0.1184,0.0966,0.1761
+Random,0.1239,0.0793,0.0841,0.1202
