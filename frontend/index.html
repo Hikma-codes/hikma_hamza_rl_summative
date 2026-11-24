@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f8ff">
+    <title>SmartLearn Ghana | Learning Adventure</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/" aria-label="SmartLearn Ghana home">
+                <span class="brand-mark">S</span>
+                <span class="brand-copy">
+                    <strong>SmartLearn</strong>
+                    <small>GHANA</small>
+                </span>
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <button class="nav-link active" data-view="learning-view">
+                    Learning room
+                </button>
+                <button class="nav-link" data-view="lab-view">
+                    AI learning lab
+                </button>
+            </nav>
+
+            <div class="topbar-right">
+                <span class="connection-indicator">
+                    <span class="status-dot" id="connection-dot"></span>
+                    <span id="connection-label">Connecting...</span>
+                </span>
+                <div class="topbar-avatar">SL</div>
+            </div>
+        </header>
+
+        <main>
+            <section id="learning-view" class="page-view active-view">
+                <div class="welcome-banner">
+                    <div class="welcome-copy">
+                        <span class="eyebrow">YOUR LEARNING ADVENTURE STARTS HERE</span>
+                        <h1>Ready to learn<br>something <span>amazing?</span></h1>
+                        <p>Explore words, practise listening and grow your English skills one activity at a time.</p>
+                        <div class="welcome-actions">
+                            <button class="primary-button" id="start-button">
+                                Start my adventure <span aria-hidden="true">→</span>
+                            </button>
+                            <span class="welcome-note">Every little step counts!</span>
+                        </div>
+                    </div>
+
+                    <div class="welcome-art" aria-label="Illustration of a friendly learning companion">
+                        <div class="sun-shape"></div>
+                        <div class="cloud cloud-one"></div>
+                        <div class="cloud cloud-two"></div>
+                        <div class="art-book">
+                            <div class="book-page left-page"></div>
+                            <div class="book-page right-page"></div>
+                            <span class="book-letter">A</span>
+                        </div>
+                        <div class="friendly-character">
+                            <div class="character-hair"></div>
+                            <div class="character-face">
+                                <span class="eye eye-left"></span>
+                                <span class="eye eye-right"></span>
+                                <span class="character-smile"></span>
+                            </div>
+                            <div class="character-body">
+                                <span class="shirt-detail"></span>
+                            </div>
+                            <div class="character-arm arm-left"></div>
+                            <div class="character-arm arm-right"></div>
+                        </div>
+                        <div class="floating-star star-one">★</div>
+                        <div class="floating-star star-two">✦</div>
+                        <div class="floating-star star-three">★</div>
+                        <div class="art-caption">Learn. Explore. Shine!</div>
+                    </div>
+                </div>
+
+                <section class="session-toolbar">
+                    <div>
+                        <span class="section-kicker">YOUR LEARNING SESSION</span>
+                        <h2>Let's make today count!</h2>
+                    </div>
+
+                    <div class="session-settings">
+                        <label>
+                            Learning guide
+                            <select id="algorithm-select">
+                                <option value="DQN">DQN</option>
+                                <option value="REINFORCE">REINFORCE</option>
+                                <option value="PPO">PPO</option>
+                                <option value="A2C">A2C</option>
+                            </select>
+                        </label>
+                        <label>
+                            Starting level
+                            <select id="profile-select">
+                                <option value="beginner">Beginner</option>
+                                <option value="developing">Developing</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="uneven">Mixed skills</option>
+                            </select>
+                        </label>
+                    </div>
+                </section>
+
+                <div class="learning-layout">
+                    <section class="main-learning-column">
+                        <div class="section-heading">
+                            <div>
+                                <span class="section-kicker">YOUR CLASSROOM</span>
+                                <h2>Today's learning space</h2>
+                            </div>
+                            <span class="session-pill" id="session-status">Not started</span>
+                        </div>
+
+                        <div class="classroom-card">
+                            <div class="classroom-scene">
+                                <div class="scene-window">
+                                    <span class="window-sun"></span>
+                                    <span class="window-hill hill-a"></span>
+                                    <span class="window-hill hill-b"></span>
+                                </div>
+                                <div class="scene-shelf">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <div class="scene-board">
+                                    <span class="board-label">TODAY WE CAN...</span>
+                                    <strong>LEARN NEW WORDS!</strong>
+                                    <span class="board-doodle">A B C</span>
+                                </div>
+                                <div class="scene-desk"></div>
+                                <div class="scene-plant">
+                                    <span class="plant-leaf leaf-a"></span>
+                                    <span class="plant-leaf leaf-b"></span>
+                                    <span class="plant-pot"></span>
+                                </div>
+                                <div class="scene-floor"></div>
+                                <div class="scene-character">
+                                    <div class="scene-hair"></div>
+                                    <div class="scene-face">
+                                        <i></i><i></i><b></b>
+                                    </div>
+                                    <div class="scene-shirt"></div>
+                                    <div class="scene-book"></div>
+                                </div>
+                                <div class="scene-message" id="scene-message">
+                                    Your learning adventure is waiting!
+                                </div>
+                            </div>
+
+                            <div class="activity-panel">
+                                <div class="activity-panel-top">
+                                    <span class="activity-label">YOUR NEXT ACTIVITY</span>
+                                    <span class="activity-number" id="activity-number">READY</span>
+                                </div>
+
+                                <div class="activity-symbol" id="activity-symbol">A</div>
+                                <h3 id="activity-title">Your next adventure awaits</h3>
+                                <p id="activity-description">
+                                    Start a session and your AI learning guide will choose an activity for you.
+                                </p>
+
+                                <div class="activity-details">
+                                    <span id="target-skill">Waiting for your first activity</span>
+                                    <span id="activity-difficulty">Adaptive learning</span>
+                                </div>
+
+                                <button class="primary-button activity-button" id="step-button" disabled>
+                                    Start activity <span aria-hidden="true">→</span>
+                                </button>
+                                <p class="simulation-note">
+                                    Demonstration mode: activity outcomes are generated by the learning simulation.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="section-heading progress-heading">
+                            <div>
+                                <span class="section-kicker">YOUR GROWTH</span>
+                                <h2>Look how far you've come!</h2>
+                            </div>
+                            <span class="mastery-total" id="mastery-total">0% overall mastery</span>
+                        </div>
+
+                        <div class="skills-grid">
+                            <article class="skill-card skill-vocabulary">
+                                <div class="skill-card-top">
+                                    <span class="skill-icon">A</span>
+                                    <span class="skill-tag">WORDS</span>
+                                </div>
+                                <h3>Vocabulary</h3>
+                                <p>Discover and understand new words.</p>
+                                <div class="progress-track"><span id="vocabulary-bar"></span></div>
+                                <div class="progress-caption">
+                                    <span>Learning progress</span>
+                                    <strong id="vocabulary-value">0%</strong>
+                                </div>
+                            </article>
+
+                            <article class="skill-card skill-listening">
+                                <div class="skill-card-top">
+                                    <span class="skill-icon">耳</span>
+                                    <span class="skill-tag">LISTEN</span>
+                                </div>
+                                <h3>Listening</h3>
+                                <p>Practise understanding spoken English.</p>
+                                <div class="progress-track"><span id="listening-bar"></span></div>
+                                <div class="progress-caption">
+                                    <span>Learning progress</span>
+                                    <strong id="listening-value">0%</strong>
+                                </div>
+                            </article>
+
+                            <article class="skill-card skill-reading">
+                                <div class="skill-card-top">
+                                    <span class="skill-icon">R</span>
+                                    <span class="skill-tag">READ</span>
+                                </div>
+                                <h3>Comprehension</h3>
+                                <p>Understand what you read.</p>
+                                <div class="progress-track"><span id="comprehension-bar"></span></div>
+                                <div class="progress-caption">
+                                    <span>Learning progress</span>
+                                    <strong id="comprehension-value">0%</strong>
+                                </div>
+                            </article>
+
+                            <article class="skill-card skill-speaking">
+                                <div class="skill-card-top">
+                                    <span class="skill-icon">Aa</span>
+                                    <span class="skill-tag">CREATE</span>
+                                </div>
+                                <h3>Sentence building</h3>
+                                <p>Put words together to share ideas.</p>
+                                <div class="progress-track"><span id="sentence_building-bar"></span></div>
+                                <div class="progress-caption">
+                                    <span>Learning progress</span>
+                                    <strong id="sentence_building-value">0%</strong>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <aside class="side-column">
+                        <section class="side-card companion-card">
+                            <div class="side-card-heading">
+                                <div>
+                                    <span class="section-kicker">YOUR COMPANION</span>
+                                    <h3>Meet your learning buddy!</h3>
+                                </div>
+                            </div>
+                            <div class="buddy-art">
+                                <div class="buddy-sparkle sparkle-left">✦</div>
+                                <div class="buddy">
+                                    <div class="buddy-hair"></div>
+                                    <div class="buddy-face">
+                                        <span></span><span></span><b></b>
+                                    </div>
+                                    <div class="buddy-body">
+                                        <i></i>
+                                    </div>
+                                </div>
+                                <div class="buddy-sparkle sparkle-right">★</div>
+                            </div>
+                            <div class="buddy-message" id="buddy-message">
+                                Hello, superstar! Let's learn something new together.
+                            </div>
+                        </section>
+
+                        <section class="side-card wellbeing-card">
+                            <span class="section-kicker">HOW YOU'RE FEELING</span>
+                            <h3>Your learning balance</h3>
+                            <div class="wellbeing-item">
+                                <div class="wellbeing-label">
+                                    <span>Confidence</span>
+                                    <strong id="confidence-value">40%</strong>
+                                </div>
+                                <div class="mini-track confidence-track"><span id="confidence-bar"></span></div>
+                            </div>
+                            <div class="wellbeing-item">
+                                <div class="wellbeing-label">
+                                    <span>Engagement</span>
+                                    <strong id="engagement-value">75%</strong>
+                                </div>
+                                <div class="mini-track engagement-track"><span id="engagement-bar"></span></div>
+                            </div>
+                            <div class="wellbeing-item">
+                                <div class="wellbeing-label">
+                                    <span>Energy used</span>
+                                    <strong id="fatigue-value">5%</strong>
+                                </div>
+                                <div class="mini-track fatigue-track"><span id="fatigue-bar"></span></div>
+                            </div>
+                        </section>
+
+                        <section class="side-card journey-card">
+                            <span class="section-kicker">YOUR JOURNEY</span>
+                            <div class="journey-stat">
+                                <strong id="step-count">0</strong>
+                                <span>activities completed</span>
+                            </div>
+                            <div class="journey-track">
+                                <span id="journey-bar"></span>
+                            </div>
+                            <div class="journey-caption">
+                                <span>Learning session</span>
+                                <strong id="journey-count">0 / 20</strong>
+                            </div>
+                            <div class="reward-stat">
+                                <span>Session reward</span>
+                                <strong id="reward-total">0.00</strong>
+                            </div>
+                        </section>
+                    </aside>
+                </div>
+            </section>
+
+            <section id="lab-view" class="page-view">
+                <div class="lab-header">
+                    <span class="section-kicker">BEHIND THE LEARNING EXPERIENCE</span>
+                    <h1>AI Learning Lab</h1>
+                    <p>Explore how the reinforcement-learning agent makes decisions and how the simulated learner's
+                        state changes.</p>
+                </div>
+
+                <div class="lab-summary-grid">
+                    <article class="lab-stat-card">
+                        <span>SELECTED ALGORITHM</span>
+                        <strong id="lab-algorithm">DQN</strong>
+                        <small>Trained reinforcement-learning agent</small>
+                    </article>
+                    <article class="lab-stat-card">
+                        <span>LAST ACTION</span>
+                        <strong id="lab-action">Waiting</strong>
+                        <small>Activity selected by the agent</small>
+                    </article>
+                    <article class="lab-stat-card">
+                        <span>LAST REWARD</span>
+                        <strong id="lab-reward">0.00</strong>
+                        <small>Reward returned by the environment</small>
+                    </article>
+                    <article class="lab-stat-card">
+                        <span>SUCCESS PROBABILITY</span>
+                        <strong id="lab-probability">—</strong>
+                        <small>Environment's simulated probability</small>
+                    </article>
+                </div>
+
+                <div class="lab-grid">
+                    <section class="lab-card">
+                        <div class="lab-card-heading">
+                            <div>
+                                <span class="section-kicker">AGENT DECISION</span>
+                                <h2>What did the AI choose?</h2>
+                            </div>
+                            <span class="lab-live-dot">LIVE SIMULATION</span>
+                        </div>
+                        <div class="decision-visual">
+                            <div class="decision-orbit">
+                                <span class="orbit-dot dot-one"></span>
+                                <span class="orbit-dot dot-two"></span>
+                                <span class="orbit-dot dot-three"></span>
+                                <div class="decision-core">AI</div>
+                            </div>
+                            <div>
+                                <span class="decision-label">SELECTED ACTIVITY</span>
+                                <h3 id="decision-activity">No decision yet</h3>
+                                <p id="decision-explanation">Start a learning session to see the trained agent select an
+                                    activity.</p>
+                            </div>
+                        </div>
+                        <div class="decision-meta">
+                            <div><span>Action index</span><strong id="decision-index">—</strong></div>
+                            <div><span>Target skill</span><strong id="decision-target">—</strong></div>
+                            <div><span>Outcome</span><strong id="decision-outcome">—</strong></div>
+                        </div>
+                    </section>
+
+                    <section class="lab-card">
+                        <div class="lab-card-heading">
+                            <div>
+                                <span class="section-kicker">ENVIRONMENT RESPONSE</span>
+                                <h2>State changes</h2>
+                            </div>
+                        </div>
+                        <div id="state-changes" class="state-changes">
+                            <p class="empty-state">State comparisons will appear after the first agent action.</p>
+                        </div>
+                    </section>
+                </div>
+
+                <section class="lab-card observation-card">
+                    <div class="lab-card-heading">
+                        <div>
+                            <span class="section-kicker">AGENT INPUT</span>
+                            <h2>Observation space</h2>
+                        </div>
+                        <span class="observation-count">11 normalized values</span>
+                    </div>
+                    <p class="lab-description">These are the values supplied to the trained agent at each decision step.
+                        Each value is normalized between 0 and 1.</p>
+                    <div class="observation-grid" id="observation-grid">
+                        <div class="empty-state">Start a session to inspect the agent's observation.</div>
+                    </div>
+                </section>
+
+                <section class="lab-card activity-history-card">
+                    <div class="lab-card-heading">
+                        <div>
+                            <span class="section-kicker">SESSION HISTORY</span>
+                            <h2>Agent activity timeline</h2>
+                        </div>
+                        <span class="observation-count" id="history-count">0 actions</span>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <p class="empty-state">The agent's decisions will appear here as the simulation runs.</p>
+                    </div>
+                </section>
+
+                <div class="lab-disclaimer">
+                    <strong>About this demonstration</strong>
+                    <p>SmartLearn Ghana currently uses a simulated learner model. Success outcomes, mastery levels and
+                        wellbeing indicators are generated by the custom environment's rules. They are not measurements
+                        collected from real children.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <span>SMARTLEARN GHANA</span>
+            <span>Learning grows one step at a time.</span>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+
+</html>
