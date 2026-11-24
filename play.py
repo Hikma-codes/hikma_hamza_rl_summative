@@ -1,19 +1,52 @@
 
+import argparse
+
 import pygame
 import numpy as np
 
 from environment.custom_env import SmartLearnEnv
 from environment.rendering import SmartLearnRenderer
+from evaluation.agent_loader import TrainedAgent, CHECKPOINTS
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Run the SmartLearn Ghana learning simulation."
+    )
+
+    parser.add_argument(
+        "--agent",
+        type=str,
+        default="DQN",
+        choices=["DQN", "REINFORCE", "PPO", "A2C", "RANDOM"],
+        help="Choose the trained agent or random baseline.",
+    )
+
+    args = parser.parse_args()
+    selected_agent = args.agent
+
+    # Load the selected trained agent.
+    agent = None
+
+    if selected_agent != "RANDOM":
+        print(f"\nLoading trained {selected_agent} agent...")
+
+        agent = TrainedAgent(
+            selected_agent,
+            CHECKPOINTS[selected_agent],
+        )
+
+        print(f"{selected_agent} loaded successfully.\n")
+
+    else:
+        print("\nUsing the random baseline policy.\n")
+
     env = SmartLearnEnv(
         max_steps=20,
         render_mode=None,
     )
 
     renderer = SmartLearnRenderer()
-
     rng = np.random.default_rng(42)
 
     episode = 1
@@ -26,112 +59,132 @@ def main():
 
     last_info = None
     paused = False
+    completed_at = None
 
     last_step_time = pygame.time.get_ticks()
-    completed_at = None
+
+    pygame.display.set_caption(
+        f"SmartLearn Ghana | Agent: {selected_agent}"
+    )
+
+    print("SmartLearn Ghana simulation started.")
+    print(f"Selected policy: {selected_agent}")
+    print("Press SPACE to pause or resume.")
+    print("Press R to restart the episode.")
+    print("Press ESC to exit.\n")
 
     running = True
 
-    print("SmartLearn Ghana simulation started.")
-    print("Demonstration policy: Random baseline")
-    print("Press SPACE to pause or resume.")
-    print("Press R to restart the episode.")
-    print("Press ESC to exit.")
+    try:
+        while running:
 
-    while running:
+            for event in pygame.event.get():
 
-        for event in pygame.event.get():
-
-            if event.type == pygame.QUIT:
-                running = False
-
-            elif event.type == pygame.KEYDOWN:
-
-                if event.key == pygame.K_ESCAPE:
+                if event.type == pygame.QUIT:
                     running = False
 
-                elif event.key == pygame.K_SPACE:
-                    paused = not paused
+                elif event.type == pygame.KEYDOWN:
 
-                elif event.key == pygame.K_r:
-                    observation, reset_info = env.reset(
-                        seed=int(rng.integers(0, 100000)),
-                        options={"profile": "beginner"},
-                    )
+                    if event.key == pygame.K_ESCAPE:
+                        running = False
 
-                    episode_reward = 0.0
-                    last_info = None
-                    completed_at = None
+                    elif event.key == pygame.K_SPACE:
+                        paused = not paused
 
-        current_time = pygame.time.get_ticks()
+                    elif event.key == pygame.K_r:
+                        observation, reset_info = env.reset(
+                            seed=int(rng.integers(0, 100000)),
+                            options={"profile": "beginner"},
+                        )
 
-        # Run one learning activity every 1.2 seconds.
-        if (
-            running
-            and not paused
-            and completed_at is None
-            and current_time - last_step_time >= 1200
-        ):
+                        episode_reward = 0.0
+                        last_info = None
+                        completed_at = None
+                        last_step_time = pygame.time.get_ticks()
 
-            action = int(rng.integers(0, 7))
+                        print(f"\nEpisode {episode} restarted.")
 
-            (
-                observation,
-                reward,
-                terminated,
-                truncated,
-                last_info,
-            ) = env.step(action)
+            current_time = pygame.time.get_ticks()
 
-            episode_reward += reward
+            # Run one learning activity every 1.2 seconds.
+            if (
+                running
+                and not paused
+                and completed_at is None
+                and current_time - last_step_time >= 1200
+            ):
 
-            print(
-                f"Episode {episode} | "
-                f"Step {env.steps} | "
-                f"Action: {last_info['activity']} | "
-                f"Success: {last_info['success']} | "
-                f"Reward: {reward:.3f} | "
-                f"Mastery: {last_info['mean_mastery']}"
-            )
+                # Select an action using the chosen policy.
+                if selected_agent == "RANDOM":
+                    action = int(rng.integers(0, 7))
+                else:
+                    action = agent.select_action(observation)
 
-            last_step_time = current_time
+                (
+                    observation,
+                    reward,
+                    terminated,
+                    truncated,
+                    last_info,
+                ) = env.step(action)
 
-            if terminated or truncated:
-                completed_at = current_time
+                episode_reward += reward
 
                 print(
-                    "Episode finished:",
-                    last_info["termination_reason"],
+                    f"Agent: {selected_agent} | "
+                    f"Episode: {episode} | "
+                    f"Step: {env.steps} | "
+                    f"Action: {last_info['activity']} | "
+                    f"Success: {last_info['success']} | "
+                    f"Reward: {reward:.3f} | "
+                    f"Mastery: {last_info['mean_mastery']:.3f}"
                 )
 
-        # Start the next episode after displaying the result.
-        if (
-            completed_at is not None
-            and current_time - completed_at >= 2200
-        ):
+                last_step_time = current_time
 
-            episode += 1
+                if terminated or truncated:
+                    completed_at = current_time
 
-            observation, reset_info = env.reset(
-                seed=int(rng.integers(0, 100000)),
-                options={"profile": "beginner"},
+                    print(
+                        f"\nEpisode {episode} finished: "
+                        f"{last_info['termination_reason']}"
+                    )
+
+                    print(
+                        f"Total episode reward: {episode_reward:.3f}\n"
+                    )
+
+            # Start the next episode after displaying the result.
+            if (
+                completed_at is not None
+                and current_time - completed_at >= 2200
+            ):
+
+                episode += 1
+
+                observation, reset_info = env.reset(
+                    seed=int(rng.integers(0, 100000)),
+                    options={"profile": "beginner"},
+                )
+
+                episode_reward = 0.0
+                last_info = None
+                completed_at = None
+                last_step_time = current_time
+
+            renderer.draw(
+                env=env,
+                info=last_info,
+                episode=episode,
+                episode_reward=episode_reward,
+                paused=paused,
+                baseline=(selected_agent == "RANDOM"),
             )
 
-            episode_reward = 0.0
-            last_info = None
-            completed_at = None
-            last_step_time = current_time
+    finally:
+        renderer.close()
+        env.close()
 
-        renderer.draw(
-            env=env,
-            info=last_info,
-            episode=episode,
-            episode_reward=episode_reward,
-            paused=paused,
-            baseline=True,
-        )
-
-    renderer.close()
     print("SmartLearn Ghana simulation closed.")
 
 
