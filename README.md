@@ -56,7 +56,6 @@ The following space is reserved for a screenshot of the working application.
 
 ![alt text](AdobeExpressPhotos_e10be55c67ec4d248af1e11758bd154e_CopyEdited.png)
 
-![SmartLearn Ghana Application Interface](assets/smartlearn-dashboard.png)
 
 
 ## 6. Reinforcement Learning Environment
