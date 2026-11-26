@@ -335,6 +335,26 @@ The results demonstrate that agent performance involves more than maximising cum
 
 SmartLearn Ghana provides a foundation for further exploration of reinforcement learning applications in accessible and context-aware educational technology.
 
+## 17. References
+
+REFERENCES
+[1] Mnih, V., et al. (2015). Human-level control through deep reinforcement learning. Nature, 518, 529–533. https://doi.org/10.1038/nature14236
+
+
+[2] Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning, 8, 229–256. https://doi.org/10.1007/BF00992696
+
+
+[3] Schulman, J., et al. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347. https://arxiv.org/abs/1707.06347
+
+
+[4] Mnih, V., et al. (2016). Asynchronous Methods for Deep Reinforcement Learning. Proceedings of ICML, PMLR 48, 1928–1937. https://proceedings.mlr.press/v48/mniha16.html
+
+
+[5] PyTorch Foundation. TorchRL documentation. https://pytorch.org/rl/
+
+
+[6] Farama Foundation. Gymnasium documentation: Create a custom environment. https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
+
 ---
 
 **Project:** SmartLearn Ghana  
