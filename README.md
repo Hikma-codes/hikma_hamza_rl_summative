@@ -337,7 +337,6 @@ SmartLearn Ghana provides a foundation for further exploration of reinforcement 
 
 ## 17. References
 
-REFERENCES
 [1] Mnih, V., et al. (2015). Human-level control through deep reinforcement learning. Nature, 518, 529–533. https://doi.org/10.1038/nature14236
 
 
